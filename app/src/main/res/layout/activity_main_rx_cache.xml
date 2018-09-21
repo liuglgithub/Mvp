@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".rxcache.ui.MainRxCacheActivity">
+
+    <TextView
+        android:id="@+id/rxcacheZhihuDateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="加载的数据date"
+        android:gravity="center|left"
+        />
+
+    <Button
+        android:id="@+id/rxcacheRefreshBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="刷新第一次数据"
+        app:layout_constraintLeft_toRightOf="@+id/rxcacheZhihuDateTv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/rxcacheLoadMoreDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="加载更多"
+        app:layout_constraintLeft_toRightOf="@+id/rxcacheRefreshBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rxcacheResultTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/rxcacheZhihuDateTv"
+        android:text="akldsf"
+        android:gravity="center|left"
+        />
+
+</android.support.constraint.ConstraintLayout>

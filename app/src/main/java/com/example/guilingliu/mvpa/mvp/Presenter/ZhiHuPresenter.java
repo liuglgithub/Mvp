@@ -1,14 +1,20 @@
 package com.example.guilingliu.mvpa.mvp.Presenter;
 
+import android.util.Log;
+
 import com.example.guilingliu.mvpa.api.ApiManager;
 import com.example.guilingliu.mvpa.bean.ZhiHuDaily;
 import com.example.guilingliu.mvpa.mvp.contract.ZhiHuHomeContract;
 import com.example.guilingliu.mvpa.mvp.observer.BaseObserver;
 import com.example.guilingliu.mvpa.mvp.view.ImpBaseView;
+import com.example.guilingliu.mvpa.rxcache.cache.RxcacheProvider;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.rx_cache2.DynamicKey;
+import io.rx_cache2.EvictDynamicKey;
 
 public class ZhiHuPresenter extends BasePresenter implements ZhiHuHomeContract.Presenter {
 
@@ -20,10 +26,12 @@ public class ZhiHuPresenter extends BasePresenter implements ZhiHuHomeContract.P
      */
     @Override
     public void refreshZhihuDaily() {
-
-        ApiManager.getInstence()
+//
+        Observable<ZhiHuDaily> zhiHuDaily = ApiManager.getInstence()
                 .getZhihuService()
-                .getLatestZhihuDaily()
+                .getLatestZhihuDaily();
+
+        RxcacheProvider.getUserCache().getLoadMoreData(zhiHuDaily, new DynamicKey("refresh"), new EvictDynamicKey(false))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<ZhiHuDaily>() {
@@ -40,7 +48,11 @@ public class ZhiHuPresenter extends BasePresenter implements ZhiHuHomeContract.P
 
                     @Override
                     public void onBaseError(Throwable e) {
+                        Log.e("ceshi",""+e.getMessage());
+                        Log.e("ceshi",""+e.getCause());
+                        Log.e("ceshi",""+e.getStackTrace());
 
+//                        Log.e("ceshi",""+ HttpExceptionUtils.FilterHttpException(e));
                     }
 
                     @Override
@@ -48,33 +60,66 @@ public class ZhiHuPresenter extends BasePresenter implements ZhiHuHomeContract.P
 
                     }
                 });
+//
+//
+
+//
+//        ApiManager.getInstence()
+//                .getZhihuService()
+//                .getLatestZhihuDaily()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseObserver<ZhiHuDaily>() {
+//                    @Override
+//                    public void onBaseSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onBaseonNext(ZhiHuDaily daily) {
+//                        date = daily.getDate();
+//                        mZhiHuDailyFrag.refreshSuccessed(daily);
+//                    }
+//
+//                    @Override
+//                    public void onBaseError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onBaseComplete() {
+//
+//                    }
+//                });
 
 
     }
 
     @Override
     public void loadMoreData() {
-        ApiManager.getInstence()
+        Observable<ZhiHuDaily> zhiHuDaily = ApiManager.getInstence()
                 .getZhihuService()
-                .getZhihuDaily(date)
+                .getZhihuDaily(date);
+
+        RxcacheProvider.getUserCache().getLoadMoreDataAgain(zhiHuDaily, new DynamicKey(date), new EvictDynamicKey(false))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<ZhiHuDaily>() {
-
                     @Override
-                    public void onBaseSubscribe(Disposable disposable) {
+                    public void onBaseSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onBaseonNext(ZhiHuDaily data) {
-                        date = data.getDate();
-                        mZhiHuDailyFrag.loadSuccessed(data);
+                    public void onBaseonNext(ZhiHuDaily daily) {
+                        date = daily.getDate();
+                        mZhiHuDailyFrag.refreshSuccessed(daily);
                     }
 
                     @Override
                     public void onBaseError(Throwable e) {
-
+                        Log.e("ceshi",""+e.getMessage());
+                        Log.e("ceshi",""+e.getMessage());
                     }
 
                     @Override
@@ -82,6 +127,39 @@ public class ZhiHuPresenter extends BasePresenter implements ZhiHuHomeContract.P
 
                     }
                 });
+
+
+//
+//        ApiManager.getInstence()
+//                .getZhihuService()
+//                .getZhihuDaily(date)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseObserver<ZhiHuDaily>() {
+//
+//                    @Override
+//                    public void onBaseSubscribe(Disposable disposable) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onBaseonNext(ZhiHuDaily data) {
+//                        date = data.getDate();
+//                        mZhiHuDailyFrag.loadSuccessed(data);
+//                    }
+//
+//                    @Override
+//                    public void onBaseError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onBaseComplete() {
+//
+//                    }
+//                });
+//
+//
     }
 
     @Override

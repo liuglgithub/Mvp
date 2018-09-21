@@ -1,19 +1,35 @@
 package com.example.guilingliu.mvpa.rxcache.ui;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.guilingliu.mvpa.GloableApp;
 import com.example.guilingliu.mvpa.R;
 import com.example.guilingliu.mvpa.bean.ZhiHuDaily;
 import com.example.guilingliu.mvpa.bean.ZhiHuStory;
+import com.example.guilingliu.mvpa.config.Config;
 import com.example.guilingliu.mvpa.mvp.Presenter.ZhiHuPresenter;
 import com.example.guilingliu.mvpa.mvp.contract.ZhiHuHomeContract;
+import com.example.guilingliu.mvpa.utils.RxPermissionHelper;
+import com.example.guilingliu.mvpa.utils.StorageUtils;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 
+import io.reactivex.functions.Consumer;
+
+/**
+ * rxcache的缓存。
+ * <p>
+ * 1、缓存时间，
+ * 2、缓存大小，
+ * 3、手动清除缓存
+ */
 public class MainRxCacheActivity extends AppCompatActivity implements View.OnClickListener, ZhiHuHomeContract.View {
 
 
@@ -40,6 +56,20 @@ public class MainRxCacheActivity extends AppCompatActivity implements View.OnCli
         rxcacheRefreshBtn.setOnClickListener(this);
         rxcacheLoadMoreDataBtn.setOnClickListener(this);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RxPermissionHelper.getInstance().requestPermission(this, new RxPermissionHelper.OnPermissionListener() {
+            @Override
+            public void onGrant(boolean grant) {
+                if (grant){
+                    StorageUtils.getExternalCacheDir(GloableApp.context, Config.ZHIHU_CACHE);
+                }
+            }
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @Override

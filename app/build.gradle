@@ -37,7 +37,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    //rxcache
+    implementation "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x"
+    implementation 'com.github.VictorAlbertos.Jolyglot:gson:0.0.4'
+
     //权限
-    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
 
 }

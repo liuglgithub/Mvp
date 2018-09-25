@@ -1,9 +1,7 @@
 package com.example.guilingliu.mvpa.utils;
 
-import android.Manifest;
 import android.app.Activity;
 import android.os.Build;
-import android.view.View;
 
 import com.example.guilingliu.mvpa.GloableApp;
 import com.example.guilingliu.mvpa.config.Config;

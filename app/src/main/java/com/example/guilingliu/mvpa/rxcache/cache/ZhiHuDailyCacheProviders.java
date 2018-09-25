@@ -18,10 +18,10 @@ public interface ZhiHuDailyCacheProviders {
      * @param evictDynamicKey   可以明确地清理指定的数据 DynamicKey.
      * @return
      */
-    @LifeCache(duration = 1,timeUnit = TimeUnit.DAYS)
+    @LifeCache(duration = 1,timeUnit = TimeUnit.MINUTES)
     Observable<ZhiHuDaily> getLoadMoreData(Observable<ZhiHuDaily> zhihu, DynamicKey date, EvictDynamicKey evictDynamicKey);
 
-    @LifeCache(duration = 1,timeUnit = TimeUnit.DAYS)
+    @LifeCache(duration = 1,timeUnit = TimeUnit.MINUTES)
     Observable<ZhiHuDaily> getLoadMoreDataAgain(Observable<ZhiHuDaily> zhihu, DynamicKey date, EvictDynamicKey evictDynamicKey);
 
 }

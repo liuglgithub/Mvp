@@ -14,8 +14,10 @@ public class RxcacheProvider {
     public synchronized static ZhiHuDailyCacheProviders getUserCache() {
         if (zhiHuDailyCacheProviders == null) {
             zhiHuDailyCacheProviders = new RxCache.Builder()
+                    .setMaxMBPersistenceCache(150)
                     .persistence(StorageUtils.getExternalCacheDirPath(GloableApp.context, Config.ZHIHU_CACHE),
-                            new GsonSpeaker())//缓存文件的配置、数据的解析配置
+                            new GsonSpeaker())//缓存文件的配置、数据的解析配置.
+
                     .using(ZhiHuDailyCacheProviders.class);//这些配置对应的缓存接口
         }
         return zhiHuDailyCacheProviders;

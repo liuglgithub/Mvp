@@ -9,6 +9,8 @@ import com.example.guilingliu.mvpa.mvp.observer.BaseObserver;
 import com.example.guilingliu.mvpa.mvp.view.ImpBaseView;
 import com.example.guilingliu.mvpa.rxcache.cache.RxcacheProvider;
 
+import java.util.HashMap;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -20,6 +22,8 @@ public class ZhiHuPresenter extends BasePresenter implements ZhiHuHomeContract.P
 
     private ZhiHuHomeContract.View mZhiHuDailyFrag;
     private String date;
+
+    private HashMap h;
 
     /**
      * 刷新最新的一条
